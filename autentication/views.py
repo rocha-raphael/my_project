@@ -98,7 +98,7 @@ class index(TemplateView):
                 if mensagem_erro is None:
                     try:
                         # Alterar a senha do usuário e realizar o login
-                        request.user.set_password(str(current_dict['n_senha']))
+                        request.user.set_password(str(nova_senha))
                         request.user.save()
                         autenticacao = authenticate(username=usuario, password=senha)
                         djandoLogin(request, autenticacao)
