@@ -62,10 +62,11 @@ class index(TemplateView):
         current_dict = self.process_post(request)
 
         print(current_dict,"AQUIIIIIII")
-        current_dict["container"] = request.POST.get('container')
         if current_dict['usuario'] and current_dict['senha']:
-            current_page, current_dict['erro_msg'] = self.authenticate_user(current_dict['usuario'], current_dict['senha'])
-            print(current_page, current_dict['erro_msg'])
+            current_page, erro_msg = self.authenticate_user(current_dict['usuario'], current_dict['senha'])
+            current_dict = self.process_post(request)
+            current_dict['erro_msg'] = erro_msg
+
 
         #Verificar se está autenticado
         if request.user.is_authenticated:
