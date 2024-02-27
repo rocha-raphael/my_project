@@ -125,8 +125,8 @@ class index(TemplateView):
             context['container'] = request.POST.get('container')
             print(context['senha'], "ESTA É A SENHA123")
             context['usuario_logado'] = request.user
-            context['senha'] = request.POST.get('nova_senha')
-            context['n_senha'] = request.POST.get('confirma_nova_senha')
+            context['nova_senha'] = request.POST.get('nova_senha')
+            context['confirma_nova_senha'] = request.POST.get('confirma_nova_senha')
             context["todos_grupos"] = ['supervisor','usuario','admin']
             context["grupo"] = self.verificar_grupo(self.request.user)
 
