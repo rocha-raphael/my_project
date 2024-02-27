@@ -129,6 +129,8 @@ class index(TemplateView):
             context['confirma_nova_senha'] = request.POST.get('confirma_nova_senha')
             context["todos_grupos"] = ['supervisor','usuario','admin']
             context["grupo"] = self.verificar_grupo(self.request.user)
+            if context["grupo"] == 'Sem grupo':
+                context["grupo"] = self.verificar_grupo(context['usuario'])
 
             # Add other variables as needed
 
