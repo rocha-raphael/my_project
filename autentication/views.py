@@ -445,7 +445,7 @@ class captura(TemplateView):
     
             # Atualiza o frame na página HTML
             context = {'imagem_base64': imagem_base64}
-            return render(request, 'capturar_imagem.html', context)
+            return render(request, 'capturar.html', context)
         cap.release()
 
     def post(self, request, *args, **kwargs):
