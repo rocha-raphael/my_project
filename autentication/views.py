@@ -234,7 +234,7 @@ class usuarios(LoginRequiredMixin, TemplateView):
         context['nome_completo'] = f"{user.first_name} {user.last_name}"
         context['email'] = user.email
         context['grupo'] = user.groups.first().name  # Grupo do usuário atual que indica ações de preenchimento da página
-       print(context['grupo'])
+        print(context['grupo'])
 
         return context
     #def get_context_data(self, **kwargs):
