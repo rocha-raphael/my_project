@@ -37,7 +37,7 @@
             background-color: #163d4e;
         }
 
-        #clock {
+        #clock, #mensagem {
             font-size: 24px;
             margin-top: 20px;
             color: #333;
@@ -49,34 +49,39 @@
     <h1>Bater Ponto</h1>
 
     <label for="nome_usuario">Nome do Usuário:</label>
-    <input type="text" id="nome_usuario" placeholder="Nome do Usuário" readonly>
+    <input type="text" id="nome_usuario" readonly>
 
     <button onclick="baterPonto()">Bater Ponto</button>
 
-
     <div id="clock"></div>
+    <div id="mensagem"></div>
 
     <script>
-        // Definindo a variável nome_usuario diretamente para o exemplo
-        var nome_usuario = {{ nome_usuario }}; // Aqui você substituirá pela lógica de template ou outra fonte
+        var nome_usuario = "NomeDoUsuário"; // Defina o nome do usuário conforme necessário
+        var relógioAtivo = true;
+        var intervalId;
 
         window.onload = function() {
-            // Preenche automaticamente o nome do usuário
             document.getElementById('nome_usuario').value = nome_usuario;
-
-            // Inicia o relógio imediatamente e atualiza a cada segundo
-            atualizarRelogio();
-            setInterval(atualizarRelogio, 1000);
+            intervalId = setInterval(atualizarRelogio, 1000);
         }
 
         function baterPonto() {
-            // Esta função pode ser usada para realizar ações adicionais ao bater ponto, se necessário
-            // Por enquanto, ela não realiza nenhuma ação adicional
+            if (relógioAtivo) {
+                relógioAtivo = false;
+                clearInterval(intervalId); // Para o relógio
+                var horarioAtual = new Date().toLocaleTimeString();
+                document.getElementById('mensagem').innerText = `Ponto registrado às ${horarioAtual}. Tenha um bom dia, ${nome_usuario}!`;
+            } else {
+                document.getElementById('mensagem').innerText = `O relógio já foi parado e o ponto registrado. Recarregue a página para reiniciar.`;
+            }
         }
 
         function atualizarRelogio() {
-            var horarioAtualizado = new Date().toLocaleTimeString();
-            document.getElementById('clock').innerText = `Olá, ${nome_usuario}! Horário atual: ${horarioAtualizado}`;
+            if (relógioAtivo) {
+                var horarioAtualizado = new Date().toLocaleTimeString();
+                document.getElementById('clock').innerText = `Olá, ${nome_usuario}! Horário atual: ${horarioAtualizado}`;
+            }
         }
     </script>
 
