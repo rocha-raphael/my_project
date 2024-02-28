@@ -423,8 +423,8 @@ class usuarios(LoginRequiredMixin, TemplateView):
             # A senha atende aos critérios e é compatível
             return None
 
-class CapturaView(View):
 
+class CapturaView(View):
     @gzip.gzip_page
     def get(self, request, *args, **kwargs):
         try:
@@ -437,27 +437,36 @@ class CapturaView(View):
     # To capture video class
     class VideoCamera(object):
         def __init__(self):
-            self.video = cv2.VideoCapture(0)
-            (self.grabbed, self.frame) = self.video.read()
-            threading.Thread(target=self.update, args=()).start()
+            self.video = None
+            threading.Thread(target=self.initialize_video, args=()).start()
+
+        def initialize_video(self):
+            try:
+                self.video = cv2.VideoCapture(0)
+                (self.grabbed, self.frame) = self.video.read()
+            except Exception as e:
+                print(f"Erro ao inicializar a câmera: {e}")
 
         def __del__(self):
-            self.video.release()
+            if self.video:
+                self.video.release()
 
         def get_frame(self):
-            image = self.frame
-            _, jpeg = cv2.imencode('.jpg', image)
-            return jpeg.tobytes()
+            if self.video:
+                _, jpeg = cv2.imencode('.jpg', self.frame)
+                return jpeg.tobytes()
 
         def update(self):
             while True:
-                (self.grabbed, self.frame) = self.video.read()
+                if self.video:
+                    (self.grabbed, self.frame) = self.video.read()
 
     def gen(self, camera):
         while True:
             frame = camera.get_frame()
-            yield (b'--frame\r\n'
-                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+            if frame:
+                yield (b'--frame\r\n'
+                       b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
     def handle_error(self, request):
-        return render(request, 'error_template.html')
+        return HttpResponse("Erro na captura de vídeo. Consulte os logs para obter mais informações.")
