@@ -11,7 +11,10 @@ from django.views.generic import TemplateView
 from django.contrib.auth import login as djandoLogin
 import re
 from django.contrib.auth.mixins import LoginRequiredMixin
+import logging
 
+# Configurando o logger
+logger = logging.getLogger(__name__)
 
 
 # Create your views here.
@@ -37,6 +40,7 @@ class index(TemplateView):
         """
         user_dict = {}
         if request.user.is_authenticated:
+            logger.info("Acesso ao site.")
             try:
                 # Se o usuário estiver logado, define o grupo do usuário e a página inicial.
                 user_dict["grupo"] = request.user.groups.first().name
@@ -122,7 +126,6 @@ class index(TemplateView):
 
     def process_post(self, request):
         context = {}
-        print(request.POST.dict(), "AQUI2")
         if request.method == 'POST':
             context['usuario'] = request.POST.get('usuario')
             context['senha'] = request.POST.get('senha')
@@ -267,7 +270,6 @@ class usuarios(LoginRequiredMixin, TemplateView):
                 current_dict['erro_msg'] = erro_msg
 
             if request.POST.get('acao_botao_usuarios') == 'editar_outro':
-                print(request.POST.dict())
                 erro_msg = self.add_user(request.POST.dict(), atualizar=True)
                 current_dict = self.get_context_data()
                 current_dict['erro_msg'] = erro_msg
@@ -288,8 +290,6 @@ class usuarios(LoginRequiredMixin, TemplateView):
 
         if request.POST.get('excluir_usuario'):
             login = request.POST.get('login')
-            print(login, "TESTE")
-            print(request.POST.dict())
             try:
                 # Tente encontrar o usuário pelo login
                 usuario = User.objects.get(username=login)
@@ -372,7 +372,7 @@ class usuarios(LoginRequiredMixin, TemplateView):
             return ''
         except Exception as e:
             return f"Erro ao adicionar ou atualizar usuário: {e}"
-            
+
     def obter_informacoes_usuario_por_login(self ,login):
         try:
             # Tente obter o usuário pelo login
