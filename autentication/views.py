@@ -11,15 +11,7 @@ from django.views.generic import TemplateView, View
 from django.contrib.auth import login as djandoLogin
 import re
 from django.contrib.auth.mixins import LoginRequiredMixin
-#teste Streaming
-import cv2
-import base64
-import threading
-import numpy as np
-from django.core.mail import EmailMessage
-from django.views.decorators import gzip
-from django.utils.decorators import method_decorator
-from django.views.decorators.csrf import csrf_exempt
+
 
 # Create your views here.
 class index(TemplateView):
@@ -88,7 +80,7 @@ class index(TemplateView):
                     return redirect("/index/usuarios/")
 
                 if request.POST.get('container') == 'ponto':
-                    return redirect("/index/captura/")
+                    return redirect("/index/ponto/")
 
                 current_dict["container"] = request.POST.get('container')
                 current_page = self.pages["home"]
@@ -425,56 +417,13 @@ class usuarios(LoginRequiredMixin, TemplateView):
             # A senha atende aos critérios e é compatível
             return None
 
-class CapturaView(View):
-    @method_decorator(csrf_exempt)
-    def dispatch(self, *args, **kwargs):
-        return super().dispatch(*args, **kwargs)
+class ponto(TemplateView):
+
+
 
     def get(self, request, *args, **kwargs):
-        try:
-            cam = self.VideoCamera()
-            return StreamingHttpResponse(self.gen(cam), content_type="multipart/x-mixed-replace;boundary=frame")
-        except Exception as e:
-            print(f"Erro na captura de vídeo: {e}")
-            return self.handle_error(request)
-    # To capture video class
-    class VideoCamera(object):
-        def __init__(self):
-            self.video = None
-            threading.Thread(target=self.initialize_video, args=()).start()
 
-        def initialize_video(self):
-            try:
-                self.video = cv2.VideoCapture(0)
-                (self.grabbed, self.frame) = self.video.read()
-            except Exception as e:
-                print(f"Erro ao inicializar a câmera: {e}")
+        return render(request, 'ponto.html', {'nome_usuario':"Raphael"})
+    def post(self, request, *args, **kwargs):
 
-        def __del__(self):
-            if self.video:
-                self.video.release()
-
-        def is_camera_initialized(self):
-            return self.video is not None and self.video.isOpened()
-
-        def get_frame(self):
-            if not self.is_camera_initialized():
-                return None
-
-            _, jpeg = cv2.imencode('.jpg', self.frame)
-            return jpeg.tobytes()
-
-        def update(self):
-            while True:
-                if self.is_camera_initialized():
-                    (self.grabbed, self.frame) = self.video.read()
-
-    def gen(self, camera):
-        while True:
-            frame = camera.get_frame()
-            if frame:
-                yield (b'--frame\r\n'
-                       b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
-
-    def handle_error(self, request):
-        return HttpResponse("Erro na captura de vídeo. Consulte os logs para obter mais informações.")
+        return render(request, 'ponto.html', {'nome_usuario':"Raphael"})
