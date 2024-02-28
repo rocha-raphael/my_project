@@ -459,5 +459,5 @@ class CapturaView(View):
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
-    def handle_error(self):
+    def handle_error(self, request):
         return render(request, 'error_template.html')
