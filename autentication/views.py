@@ -61,17 +61,20 @@ class index(TemplateView):
         #busca todos os process  do post
         current_dict = self.process_post(request)
 
-        print(current_dict,"AQUIIIIIII")
+        # verifica se senha e login foram preenchidos
         if current_dict['usuario'] and current_dict['senha']:
-            current_page, erro_msg = self.authenticate_user(current_dict['usuario'], current_dict['senha'])
-            current_dict = self.process_post(request)
-            current_dict['erro_msg'] = erro_msg
+            current_page, erro_msg = self.authenticate_user(current_dict['usuario'], current_dict['senha']) #tenta autendicar
+            current_dict = self.process_post(request) #busca as caracteristicvaas do methodo post novamente do usuário atual
+            current_dict['erro_msg'] = erro_msg #inclui a mensagem de erro no dicionario atual, se houver ao tentar autenticar
 
 
         #Verificar se está autenticado
         if request.user.is_authenticated:
-
+            """
+            Verifica os botões da side-bar e direciona para a classe
+            """
             if request.POST.get('container'):
+
                 if request.POST.get('container') == 'usuarios':
                     return redirect("/index/usuarios/")
 
@@ -95,17 +98,18 @@ class index(TemplateView):
                 confirma_nova_senha = request.POST.get('confirma_nova_senha')
                 # Validar formato da senha e obter mensagem de erro, se houver
                 mensagem_erro = self.validar_formato_senha(request, nova_senha, confirma_nova_senha, usuario)
+                # Verificar se não há mensagem de erro
                 if mensagem_erro is None:
                     try:
                         # Alterar a senha do usuário e realizar o login
-                        request.user.set_password(str(nova_senha))
-                        request.user.save()
-                        autenticacao = authenticate(username=usuario, password=confirma_nova_senha)
-                        djandoLogin(request, autenticacao)
+                        request.user.set_password(str(nova_senha))# Define a nova senha para o usuário
+                        request.user.save()# Salva as alterações no objeto do usuário
+                        autenticacao = authenticate(username=usuario, password=confirma_nova_senha)# Autentica o usuário com a nova senha
+                        djandoLogin(request, autenticacao)  # Realiza o login do usuário com a nova senha
                         # Redirecionar para a página home em caso de sucesso
                         current_page = self.pages["home"]
                     except Exception as e:
-                        # Tratar erros durante a alteração da senha  e redireciona para pagina de senha
+                        # Tratar erros durante a alteração da senha e redireciona para a página de senha
                         current_dict['erro_msg'] = f"Erro {e}."
                         current_page = self.pages["r_senha"]
                 else:
@@ -120,19 +124,14 @@ class index(TemplateView):
         context = {}
         print(request.POST.dict(), "AQUI2")
         if request.method == 'POST':
-            print("POSTE")
             context['usuario'] = request.POST.get('usuario')
             context['senha'] = request.POST.get('senha')
             context['container'] = request.POST.get('container')
-            print(context['senha'], "ESTA É A SENHA123")
             context['usuario_logado'] = request.user
             context['nova_senha'] = request.POST.get('nova_senha')
             context['confirma_nova_senha'] = request.POST.get('confirma_nova_senha')
             context["todos_grupos"] = ['supervisor','usuario','admin']
             context["grupo"] = self.verificar_grupo(request.user)
-  
-
-            # Add other variables as needed
 
         return context
     def authenticate_user(self, usuario, senha):
@@ -198,32 +197,56 @@ class index(TemplateView):
 
 class usuarios(LoginRequiredMixin, TemplateView):
     '''
-    Essa é a classe do Login, serve para logar recupear senha e autenticar via google
-
+    Essa é a classe é para incluir, editar ou excluir usuários
     '''
     #Nome do template na pasta /templates/
     pages = {"home":"home.html", "login":"login.html", "r_senha":"rec_senha.html"}
-    current_page = pages['home']
-    login_url = '/index/' 
+    current_page = pages['home'] # Pagina home é definida como padrão
+    login_url = '/index/' # Pagina para ser direcionado cas não esteja logado
 
     #current_dict["grupos"] = [grupo.name for grupo in self.request.user.groups.all()]
     def get_context_data(self, **kwargs):
+        # Obtém os dados de contexto padrão
         context = super().get_context_data(**kwargs)
+
+        # Mantém o container no "usuários" após o post
         context["container"] = 'usuarios'
-        context["todos_grupos"] = ['usuario','supervisor','admin']
-        print(self.request.user)
-        context["nomes"]= [nome.username for nome  in User.objects.all() if nome.username not in ['root', str(self.request.user)]]
+
+        # Define os grupos que podem ser escolhidos
+        context["todos_grupos"] = ['usuario', 'supervisor', 'admin']
+
+        # Sidebar da direita com nomes de usuários (excluindo 'admin' e o usuário atual)
+        context["nomes"] = [nome.username for nome in User.objects.all() if nome.username not in ['admin', str(self.request.user)]]
+
+        # Busca o nome do usuário atual
         context['nome_usuario'] = self.request.user
+
+        # Define o usuário alvo como 'editar' por padrão (edita o usuário atual)
         context['usuario_alvo'] = 'editar'
+
+        # Busca mais informações do usuário atual
         user = get_object_or_404(User, username=self.request.user)
 
-        # Obter o nome completo, e-mail e grupos
+        # Obter dados mais completos do usuário atual
         context['nome_completo'] = f"{user.first_name} {user.last_name}"
         context['email'] = user.email
-        context['grupo'] = user.groups.first().name
-        context['grupo_primario'] = context['grupo']
-        print(context)
-        # Adicione outras variáveis de contexto conforme necessário
+        context['grupo'] = user.groups.first().name  # Grupo do usuário atual que indica ações de preenchimento da página
+
+        return context
+    #def get_context_data(self, **kwargs):
+    #    context = super().get_context_data(**kwargs)
+    #    context["container"] = 'usuarios' # mantem o container no usuários após o post
+    #    context["todos_grupos"] = ['usuario','supervisor','admin'] # Grupos que podem ser escolhidos
+    #    context["nomes"]= [nome.username for nome  in User.objects.all() if nome.username not in ['admin', str(self.request.user)]] #side bar daa direita com nomes de usuários
+    #    context['nome_usuario'] = self.request.user # busca o nome do usuário atual
+    #    context['usuario_alvo'] = 'editar' # por padra tem editar que edita o usuário atual
+    #    user = get_object_or_404(User, username=self.request.user) #busca mais informações do usuário atual
+#
+    #    # Obter dados mais completos do usuárioa tual
+    #    context['nome_completo'] = f"{user.first_name} {user.last_name}"
+    #    context['email'] = user.email
+    #    context['grupo'] = user.groups.first().name #grupo do usuário atual que indica ações de preenchimento da pagina
+        
         return context
 
     def get(self, request, *args, **kwargs):
@@ -232,22 +255,25 @@ class usuarios(LoginRequiredMixin, TemplateView):
 
     def post(self, request, *args, **kwargs):
         current_dict = self.get_context_data()
-        if request.POST.get('adicionar'):
-            current_dict['usuario_alvo'] = 'adicionar'
-            current_dict['nome_usuario'] = ""
-            current_dict['nome_completo'] = ""
-            current_dict['email'] = ""
-            current_dict['grupo_new'] = ""
-            current_dict['grupo_primario'] = "usuario"
-        if request.POST.get('acao_botao_usuarios'):
+        if 'adicionar' in request.POST:
+        #if request.POST.get('adicionar'):
+                current_dict.update({
+                    'usuario_alvo': 'adicionar',
+                    'nome_usuario': "",
+                    'nome_completo': "",
+                    'email': "",
+                    'grupo_new': "",
+                    'grupo_primario': "usuario"
+                })
+        if 'acao_botao_usuarios' in request.POST:
+        #if request.POST.get('acao_botao_usuarios'):
             if request.POST.get('acao_botao_usuarios') == 'adicionar':
-                print(request.POST.dict())
                 current_dict['erro_msg'] = self.validar_formato_senha(request.POST.get('senha'))
                 if current_dict['erro_msg'] is None:
                     erro_msg = self.add_user(request.POST.dict(), atualizar=False)
-                    print("AQUI")
                     current_dict = self.get_context_data()
                     current_dict['erro_msg'] = erro_msg
+
             if request.POST.get('acao_botao_usuarios') == 'editar_atual':
                 erro_msg = self.add_user(request.POST.dict(), atualizar=True)
                 current_dict = self.get_context_data()
@@ -258,18 +284,20 @@ class usuarios(LoginRequiredMixin, TemplateView):
                 erro_msg = self.add_user(request.POST.dict(), atualizar=True)
                 current_dict = self.get_context_data()
                 current_dict['erro_msg'] = erro_msg
-        
+
+        #Aqui é a side bar de nomes do lado direito para editar outros usuários
         if request.POST.get('nome_editar'):
             usuario = request.POST.get('nome_editar')
             infos = self.obter_informacoes_usuario_por_login(usuario)
-            current_dict['usuario_alvo'] = 'editar_outro'
-            current_dict['nome_usuario'] = usuario
-            current_dict['nome_completo'] = f"{infos['primeiro_nome']} {infos['ultimo_nome']}"
-            current_dict['email'] = infos['email']
-            current_dict['grupo_primario'] =  infos['grupo_primario']
-            current_dict['usuarios_editar'] = usuario
+            current_dict.update({
+                'usuario_alvo': 'editar_outro',
+                'nome_usuario': usuario,
+                'nome_completo': f"{infos['primeiro_nome']} {infos['ultimo_nome']}",
+                'email': infos['email'],
+                'grupo_primario': infos['grupo_primario'],
+                'usuarios_editar': usuario
+            })
             
-            print(usuario)
 
         if request.POST.get('excluir_usuario'):
             login = request.POST.get('login')
