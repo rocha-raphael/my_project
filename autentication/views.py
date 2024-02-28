@@ -11,7 +11,7 @@ from django.views.generic import TemplateView
 from django.contrib.auth import login as djandoLogin
 import re
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+import cv2
 
 
 # Create your views here.
@@ -79,6 +79,9 @@ class index(TemplateView):
 
                 if request.POST.get('container') == 'usuarios':
                     return redirect("/index/usuarios/")
+
+                if request.POST.get('container') == 'usuarios':
+                    return redirect("/index/captura/")
 
                 current_dict["container"] = request.POST.get('container')
                 current_page = self.pages["home"]
@@ -414,3 +417,25 @@ class usuarios(LoginRequiredMixin, TemplateView):
 
             # A senha atende aos critérios e é compatível
             return None
+
+class captura(TemplateView):
+
+
+    def get(self, request, *args, **kwargs):
+        cap = cv2.VideoCapture(0)  # 0 representa a câmera padrão, pode ser ajustado conforme necessário
+
+        _, frame = cap.read()
+    
+        # Libera a captura após obter a imagem
+        cap.release()
+
+        return render(request, 'captura.html', {'imagem': frame})
+    def post(self, request, *args, **kwargs):
+        cap = cv2.VideoCapture(0)  # 0 representa a câmera padrão, pode ser ajustado conforme necessário
+
+        _, frame = cap.read()
+    
+        # Libera a captura após obter a imagem
+        cap.release()
+
+        return render(request, 'captura.html', {'imagem': frame})
