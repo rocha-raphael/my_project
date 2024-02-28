@@ -460,4 +460,4 @@ class captura(View):
                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
     def handle_error(self):
-        return render(request, 'captura.html')
+        return render(request, 'error_template.html')
