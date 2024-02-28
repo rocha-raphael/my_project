@@ -17,7 +17,8 @@ import base64
 import threading
 import numpy as np
 from django.core.mail import EmailMessage
-from django.views.decorators import gzip, method_decorator
+from django.views.decorators import gzip
+from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
