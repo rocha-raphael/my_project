@@ -136,6 +136,11 @@ LOGGING = {
             'level': 'DEBUG',
             'propagate': True,
         },
+        'my_project': {
+            'handlers': ['file'],
+            'level': 'DEBUG',  # Configure o nível conforme necessário (use DEBUG ou superior)
+            'propagate': False,
+        },
     },
 }
 
