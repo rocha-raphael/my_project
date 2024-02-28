@@ -1,4 +1,4 @@
-var nome_usuario = "{{ nome_usuario }}"; // Defina o nome do usuário conforme necessário
+var nome_usuario = "nome_usuario"; // Defina o nome do usuário conforme necessário
 var relógioAtivo = true;
 var intervalId;
 
