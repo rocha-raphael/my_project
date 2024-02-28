@@ -7,7 +7,7 @@ from my_project.settings import YOUR_GOOGLE_CLIENT_ID
 from django.contrib.auth.decorators import login_required
 #Autenticar
 from django.contrib.auth import logout, authenticate
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, View
 from django.contrib.auth import login as djandoLogin
 import re
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -423,59 +423,40 @@ class usuarios(LoginRequiredMixin, TemplateView):
             # A senha atende aos critérios e é compatível
             return None
 
-class captura(TemplateView):
+class captura(View):
 
     @gzip.gzip_page
     def get(self, request, *args, **kwargs):
         try:
             cam = self.VideoCamera()
             return StreamingHttpResponse(self.gen(cam), content_type="multipart/x-mixed-replace;boundary=frame")
-        except:
-            pass
-        return render(request, 'home.html')
-    
-    #to capture video class
+        except Exception as e:
+            print(f"Erro na captura de vídeo: {e}")
+            return render(request, 'home.html')
+
+    # To capture video class
     class VideoCamera(object):
         def __init__(self):
             self.video = cv2.VideoCapture(0)
             (self.grabbed, self.frame) = self.video.read()
             threading.Thread(target=self.update, args=()).start()
-    
+
         def __del__(self):
             self.video.release()
-    
+
         def get_frame(self):
             image = self.frame
             _, jpeg = cv2.imencode('.jpg', image)
             return jpeg.tobytes()
-    
+
         def update(self):
             while True:
                 (self.grabbed, self.frame) = self.video.read()
-    
-    def gen(camera):
+
+    def gen(self, camera):
         while True:
             frame = camera.get_frame()
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
-
-    def post(self, request, *args, **kwargs):
-        cap = cv2.VideoCapture(0)  # 0 representa a câmera padrão, pode ser ajustado conforme necessário
-
-        while True:
-            # Captura o frame da câmera
-            ret, frame = cap.read()
-    
-            # Converte o frame para base64
-            _, buffer = cv2.imencode('.jpg', frame)
-            imagem_base64 = base64.b64encode(buffer).decode('utf-8')
-    
-            # Atualiza o frame na página HTML
-            context = {'imagem_base64': imagem_base64}
-            return render(request, 'capturar.html', context)
-    
-        # Libera a captura após encerrar a visualização
-        cap.release()
-
 
         
