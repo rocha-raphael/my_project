@@ -57,7 +57,7 @@
 
     <script>
         // Definindo a variável nome_usuario diretamente para o exemplo
-        var nome_usuario = {{ nome_usuario }}; // Aqui você substituirá pela lógica de template ou outra fonte
+        var nome_usuario = "NomeDoUsuário"; // Aqui você substituirá pela lógica de template ou outra fonte
 
         window.onload = function() {
             // Preenche automaticamente o nome do usuário
@@ -69,8 +69,8 @@
         }
 
         function baterPonto() {
-            var horarioAtual = new Date().toLocaleTimeString();
-            document.getElementById('clock').innerText = `Olá, ${nome_usuario}! Horário atual: ${horarioAtual}`;
+            // Esta função pode ser usada para realizar ações adicionais ao bater ponto, se necessário
+            // Por enquanto, ela não realiza nenhuma ação adicional
         }
 
         function atualizarRelogio() {
