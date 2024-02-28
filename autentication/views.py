@@ -447,6 +447,7 @@ class captura(TemplateView):
             context = {'imagem_base64': imagem_base64}
             return render(request, 'capturar.html', context)
         cap.release()
+        return HttpResponse("Erro ao capturar a imagem.")
 
     def post(self, request, *args, **kwargs):
         cap = cv2.VideoCapture(0)  # 0 representa a câmera padrão, pode ser ajustado conforme necessário
