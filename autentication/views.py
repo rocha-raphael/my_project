@@ -432,7 +432,7 @@ class CapturaView(View):
             return StreamingHttpResponse(self.gen(cam), content_type="multipart/x-mixed-replace;boundary=frame")
         except Exception as e:
             print(f"Erro na captura de vídeo: {e}")
-            return self.handle_error()
+            return self.handle_error(request)
 
     # To capture video class
     class VideoCamera(object):
