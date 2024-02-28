@@ -424,22 +424,30 @@ class captura(TemplateView):
 
     def get(self, request, *args, **kwargs):
         cap = cv2.VideoCapture(0)  # 0 representa a câmera padrão, pode ser ajustado conforme necessário
-
         while True:
             # Captura o frame da câmera
             ret, frame = cap.read()
     
+            if not ret:
+                break  # Se a captura não for bem-sucedida, encerre o loop
+    
             # Converte o frame para base64
             _, buffer = cv2.imencode('.jpg', frame)
+    
+            if not _:
+                break  # Se a codificação não for bem-sucedida, encerre o loop
+    
+            # Libera a captura após encerrar a visualização
+            cap.release()
+    
+            # Converte a imagem para base64
             imagem_base64 = base64.b64encode(buffer).decode('utf-8')
     
             # Atualiza o frame na página HTML
             context = {'imagem_base64': imagem_base64}
-            return render(request, 'capturar.html', context)
-    
-        # Libera a captura após encerrar a visualização
+            return render(request, 'capturar_imagem.html', context)
         cap.release()
-        
+
     def post(self, request, *args, **kwargs):
         cap = cv2.VideoCapture(0)  # 0 representa a câmera padrão, pode ser ajustado conforme necessário
 
