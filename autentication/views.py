@@ -432,7 +432,7 @@ class captura(TemplateView):
             return StreamingHttpResponse(self.gen(cam), content_type="multipart/x-mixed-replace;boundary=frame")
         except:
             pass
-        return render(request, 'app1.html')
+        return render(request, 'capturar.html')
     
     #to capture video class
     class VideoCamera(object):
