@@ -1,40 +1,83 @@
-<style>
-    #clock {
-        font-size: 24px;
-        margin-top: 20px;
-    }
-</style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bater Ponto</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f4f6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 50px;
+        }
 
-<h1>Bater Ponto</h1>
+        #nome_usuario {
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
 
-<label for="nome_usuario">Nome do Usuário:</label>
-<input type="text" id="nome_usuario" placeholder={{ nome_usuario }}>
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #195c6b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
 
-<button onclick="baterPonto()">Bater Ponto</button>
+        button:hover {
+            background-color: #163d4e;
+        }
 
-<div id="clock"></div>
+        #clock {
+            font-size: 24px;
+            margin-top: 20px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
 
-<script>
-    // Definindo a variável nome_usuario
-    var nome_usuario = {{ nome_usuario }}; // Substitua "NomeDoUsuário" pelo nome desejado
+    <h1>Bater Ponto</h1>
 
-    window.onload = function() {
-        // Preenche automaticamente o nome do usuário
-        document.getElementById('nome_usuario').value = nome_usuario;
+    <label for="nome_usuario">Nome do Usuário:</label>
+    <input type="text" id="nome_usuario" placeholder="Nome do Usuário" readonly>
 
-        // Configura o relógio para atualizar a cada segundo
-        setInterval(atualizarRelogio, 1000);
-    }
+    <button onclick="baterPonto()">Bater Ponto</button>
 
-    function baterPonto() {
-        var nome_usuario = document.getElementById('nome_usuario').value;
-        var horarioAtual = new Date().toLocaleTimeString();
-        document.getElementById('clock').innerText = `Olá, ${nome_usuario}! Horário atual: ${horarioAtual}`;
-    }
+    <div id="clock"></div>
 
-    function atualizarRelogio() {
-        var horarioAtualizado = new Date().toLocaleTimeString();
-        var nome_usuario = document.getElementById('nome_usuario').value; // Pega o nome do usuário atualizado se foi alterado
-        document.getElementById('clock').innerText = `Olá, ${nome_usuario}! Horário atual: ${horarioAtualizado}`;
-    }
-</script>
+    <script>
+        // Definindo a variável nome_usuario diretamente para o exemplo
+        var nome_usuario = {{ nome_usuario }}; // Aqui você substituirá pela lógica de template ou outra fonte
+
+        window.onload = function() {
+            // Preenche automaticamente o nome do usuário
+            document.getElementById('nome_usuario').value = nome_usuario;
+
+            // Inicia o relógio imediatamente e atualiza a cada segundo
+            atualizarRelogio();
+            setInterval(atualizarRelogio, 1000);
+        }
+
+        function baterPonto() {
+            var horarioAtual = new Date().toLocaleTimeString();
+            document.getElementById('clock').innerText = `Olá, ${nome_usuario}! Horário atual: ${horarioAtual}`;
+        }
+
+        function atualizarRelogio() {
+            var horarioAtualizado = new Date().toLocaleTimeString();
+            document.getElementById('clock').innerText = `Olá, ${nome_usuario}! Horário atual: ${horarioAtualizado}`;
+        }
+    </script>
+
+</body>
+</html>
