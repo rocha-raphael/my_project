@@ -36,6 +36,7 @@ class index(TemplateView):
             HttpResponse: Renderiza a página inicial, a página de login, dependendo do status de login.
         """
         user_dict = {}
+        user_dict['YOUR_GOOGLE_CLIENT_ID'] = YOUR_GOOGLE_CLIENT_ID
         if request.user.is_authenticated:
 
             try:
@@ -53,7 +54,7 @@ class index(TemplateView):
         else:
             # Se o usuário não estiver logado, define a página de login.
             current_page = self.pages["login"]
-            user_dict['YOUR_GOOGLE_CLIENT_ID'] = YOUR_GOOGLE_CLIENT_ID
+            
         return render(request, current_page, user_dict)
 
     def post(self, request, *args, **kwargs):
