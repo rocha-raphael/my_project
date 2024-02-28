@@ -13,7 +13,9 @@
     <div id="clock"></div>
     <div id="mensagem"></div>
 
-
-        <script src="{% static 'javascript/ponto.js' %}"></script> 
+    <script type="text/javascript">
+        var nome_usuario = "{{ nome_usuario }}"; // Atribui o valor da variável de template
+    </script>
+    <script src="{% static 'javascript/ponto.js' %}"></script> 
 </div>
 
