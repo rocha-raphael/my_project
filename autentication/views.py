@@ -100,7 +100,7 @@ class index(TemplateView):
                         # Alterar a senha do usuário e realizar o login
                         request.user.set_password(str(nova_senha))
                         request.user.save()
-                        autenticacao = authenticate(username=usuario, password=senha)
+                        autenticacao = authenticate(username=usuario, password=confirma_nova_senha)
                         djandoLogin(request, autenticacao)
                         # Redirecionar para a página home em caso de sucesso
                         current_page = self.pages["home"]
