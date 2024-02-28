@@ -428,8 +428,8 @@ class captura(TemplateView):
             # Captura o frame da câmera
             ret, frame = cap.read()
     
-            if not ret:
-                break  # Se a captura não for bem-sucedida, encerre o loop
+            if not ret or frame is None:
+                break  # Se a captura não for bem-sucedida ou frame for vazio, encerre o loop
     
             # Converte o frame para base64
             _, buffer = cv2.imencode('.jpg', frame)
@@ -437,11 +437,11 @@ class captura(TemplateView):
             if not _:
                 break  # Se a codificação não for bem-sucedida, encerre o loop
     
-            # Libera a captura após encerrar a visualização
-            cap.release()
-    
             # Converte a imagem para base64
             imagem_base64 = base64.b64encode(buffer).decode('utf-8')
+    
+            # Libera a captura após encerrar a visualização
+            cap.release()
     
             # Atualiza o frame na página HTML
             context = {'imagem_base64': imagem_base64}
