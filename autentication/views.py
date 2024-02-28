@@ -80,7 +80,7 @@ class index(TemplateView):
                 if request.POST.get('container') == 'usuarios':
                     return redirect("/index/usuarios/")
 
-                if request.POST.get('container') == 'usuarios':
+                if request.POST.get('container') == 'ponto':
                     return redirect("/index/captura/")
 
                 current_dict["container"] = request.POST.get('container')
