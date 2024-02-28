@@ -1,6 +1,6 @@
 {% load static %}
-<link rel="stylesheet" href="/statics/css/estilo_ponto.css"> <!-- Exemplo de como incluir um CSS -->
 
+<link rel="stylesheet" href="{% static 'css/estilo_ponto.cs' %}">
 
 <div class="ponto">
     <h1>Bater Ponto</h1>
@@ -13,6 +13,7 @@
     <div id="clock"></div>
     <div id="mensagem"></div>
 
-        <script src="/statics/javascript/ponto.js"></script> 
+
+        <script src="{% static 'javascript/ponto.js' %}"></script> 
 </div>
 
