@@ -1,89 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bater Ponto</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f3f4f6;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 50px;
-        }
+<link rel="stylesheet" href="/statics/css/estilo_ponto.css"> <!-- Exemplo de como incluir um CSS -->
 
-        #nome_usuario {
-            margin-top: 10px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
-        }
 
-        button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #195c6b;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        button:hover {
-            background-color: #163d4e;
-        }
-
-        #clock, #mensagem {
-            font-size: 24px;
-            margin-top: 20px;
-            color: #333;
-        }
-    </style>
-</head>
-<body>
-
+<div class="ponto">
     <h1>Bater Ponto</h1>
 
     <label for="nome_usuario">Nome do Usuário:</label>
-    <input type="text" id="nome_usuario" readonly>
+    <input type="text" id="nome_usuario" value="{{ nome_usuario }}" readonly>
 
     <button onclick="baterPonto()">Bater Ponto</button>
 
     <div id="clock"></div>
     <div id="mensagem"></div>
 
-    <script>
-        var nome_usuario = "NomeDoUsuário"; // Defina o nome do usuário conforme necessário
-        var relógioAtivo = true;
-        var intervalId;
+        <script src="/statics/javascript/ponto.js"></script> 
+</div>
 
-        window.onload = function() {
-            document.getElementById('nome_usuario').value = nome_usuario;
-            intervalId = setInterval(atualizarRelogio, 1000);
-        }
-
-        function baterPonto() {
-            if (relógioAtivo) {
-                relógioAtivo = false;
-                clearInterval(intervalId); // Para o relógio
-                var horarioAtual = new Date().toLocaleTimeString();
-                document.getElementById('mensagem').innerText = `Ponto registrado às ${horarioAtual}. Tenha um bom dia, ${nome_usuario}!`;
-            } else {
-                document.getElementById('mensagem').innerText = `O relógio já foi parado e o ponto registrado. Recarregue a página para reiniciar.`;
-            }
-        }
-
-        function atualizarRelogio() {
-            if (relógioAtivo) {
-                var horarioAtualizado = new Date().toLocaleTimeString();
-                document.getElementById('clock').innerText = `Olá, ${nome_usuario}! Horário atual: ${horarioAtualizado}`;
-            }
-        }
-    </script>
-
-</body>
-</html>

@@ -417,13 +417,19 @@ class usuarios(LoginRequiredMixin, TemplateView):
             # A senha atende aos critérios e é compatível
             return None
 
-class ponto(TemplateView):
-
-
+class ponto(LoginRequiredMixin, TemplateView):
+    '''
+    Essa é a classe é para incluir, editar ou excluir usuários
+    '''
+    #Nome do template na pasta /templates/
+    pages = {"home":"home.html", "login":"login.html", "r_senha":"rec_senha.html"}
+    current_page = pages['home'] # Pagina home é definida como padrão
+    login_url = '/index/' # Pagina para ser direcionado cas não esteja logado
+    current_dict = {'nome_usuario':"raphael", "container": "ponto"}
 
     def get(self, request, *args, **kwargs):
 
-        return render(request, 'ponto.html', {'nome_usuario':"Raphael"})
+        return render(request, current_page, current_dict)
     def post(self, request, *args, **kwargs):
 
-        return render(request, 'ponto.html', {'nome_usuario':"Raphael"})
+        return render(request, current_page, current_dict)

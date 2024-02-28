@@ -1,0 +1,37 @@
+.ponto div{
+    font-family: Arial, sans-serif;
+    background-color: #f3f4f6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 50px;
+}
+
+#nome_usuario {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.ponto button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #195c6b;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.ponto button:hover {
+    background-color: #163d4e;
+}
+
+#clock, #mensagem {
+    font-size: 24px;
+    margin-top: 20px;
+    color: #333;
+}
