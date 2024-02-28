@@ -429,7 +429,7 @@ class ponto(LoginRequiredMixin, TemplateView):
 
     def get(self, request, *args, **kwargs):
 
-        return render(request, current_page, current_dict)
+        return render(request, self.current_page, self.current_dict)
     def post(self, request, *args, **kwargs):
 
-        return render(request, current_page, current_dict)
+        return render(request, self.current_page, self.current_dict)
