@@ -308,6 +308,16 @@ class usuarios(LoginRequiredMixin, TemplateView):
         return render(request, self.current_page, current_dict)
 
     def add_user(self, request_data, atualizar=False):
+        """
+        Adiciona um novo usuário ou atualiza um existente com base nos dados fornecidos.
+
+        Args:
+            request_data (dict): Dados do usuário a serem processados.
+            atualizar (bool): Indica se é uma atualização de usuário existente.
+
+        Returns:
+            str: Mensagem de erro ou string vazia em caso de sucesso.
+        """
         # Extraindo informações do dicionário
         login = request_data.get('login')
         nome = request_data.get('nome')
@@ -321,6 +331,7 @@ class usuarios(LoginRequiredMixin, TemplateView):
                 if atualizar:
                     # Tente obter o usuário pelo login
                     usuario = User.objects.get(username=login)
+
                     # Atualize os dados do usuário
                     usuario.username = login
                     if len(nome.split(' ')) > 1:
@@ -331,10 +342,7 @@ class usuarios(LoginRequiredMixin, TemplateView):
                         usuario.last_name = ''.strip()
                     usuario.email = email
 
-                    if senha == "0000000000":
-                        pass
-                    else:
-                        
+                    if senha != "0000000000":
                         usuario.set_password(senha)  # Certifique-se de usar set_password para armazenar a senha criptografada
 
                     # Atualize o grupo do usuário
@@ -344,27 +352,27 @@ class usuarios(LoginRequiredMixin, TemplateView):
 
                     # Salve as alterações
                     usuario.save()
+
                     # Faça login novamente com as novas credenciais
                     user_atual = get_object_or_404(User, username=self.request.user)
-                    if usuario == user_atual: 
+                    if usuario == user_atual:
                         djandoLogin(self.request, usuario)
 
                 else:
                     return "Usuário já existe"
 
-
-            elif atualizar is False:
+            elif not atualizar:
                 # Criar o usuário
                 user = User.objects.create_user(username=login, password=senha, email=email, first_name=nome)
-    
+
                 # Adicionar o usuário ao grupo (se o grupo existir)
                 novo_grupo, criado = Group.objects.get_or_create(name=grupo)
                 user.groups.add(novo_grupo)
 
             return ''
         except Exception as e:
-            print(e)
-            return e
+            return f"Erro ao adicionar ou atualizar usuário: {e}"
+            
     def obter_informacoes_usuario_por_login(self ,login):
         try:
             # Tente obter o usuário pelo login
