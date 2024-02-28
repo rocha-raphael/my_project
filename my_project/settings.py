@@ -120,30 +120,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'file': {
-            'level': 'DEBUG', 
-            'class': 'logging.FileHandler',
-            'filename': '/var/log/my_project/my_project.log', 
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['file'],
-            'level': 'DEBUG',
-            'propagate': True,
-        },
-        'my_project': {
-            'handlers': ['file'],
-            'level': 'DEBUG',  # Configure o nível conforme necessário (use DEBUG ou superior)
-            'propagate': False,
-        },
-    },
-}
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 

@@ -11,10 +11,7 @@ from django.views.generic import TemplateView
 from django.contrib.auth import login as djandoLogin
 import re
 from django.contrib.auth.mixins import LoginRequiredMixin
-import logging
 
-# Configurando o logger
-logger = logging.getLogger(__name__)
 
 
 # Create your views here.
@@ -40,7 +37,7 @@ class index(TemplateView):
         """
         user_dict = {}
         if request.user.is_authenticated:
-            logger.info("Acesso ao site.")
+
             try:
                 # Se o usuário estiver logado, define o grupo do usuário e a página inicial.
                 user_dict["grupo"] = request.user.groups.first().name
