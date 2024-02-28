@@ -423,7 +423,7 @@ class usuarios(LoginRequiredMixin, TemplateView):
             # A senha atende aos critérios e é compatível
             return None
 
-class captura(View):
+class CapturaView(View):
 
     @gzip.gzip_page
     def get(self, request, *args, **kwargs):
