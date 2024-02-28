@@ -423,7 +423,6 @@ class usuarios(LoginRequiredMixin, TemplateView):
             # A senha atende aos critérios e é compatível
             return None
 
-
 class CapturaView(View):
     @gzip.gzip_page
     def get(self, request, *args, **kwargs):
@@ -451,14 +450,19 @@ class CapturaView(View):
             if self.video:
                 self.video.release()
 
+        def is_camera_initialized(self):
+            return self.video is not None and self.video.isOpened()
+
         def get_frame(self):
-            if self.video:
-                _, jpeg = cv2.imencode('.jpg', self.frame)
-                return jpeg.tobytes()
+            if not self.is_camera_initialized():
+                return None
+
+            _, jpeg = cv2.imencode('.jpg', self.frame)
+            return jpeg.tobytes()
 
         def update(self):
             while True:
-                if self.video:
+                if self.is_camera_initialized():
                     (self.grabbed, self.frame) = self.video.read()
 
     def gen(self, camera):
