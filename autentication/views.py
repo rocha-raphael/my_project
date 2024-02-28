@@ -224,6 +224,9 @@ class usuarios(LoginRequiredMixin, TemplateView):
         # Define o usuário alvo como 'editar' por padrão (edita o usuário atual)
         context['usuario_alvo'] = 'editar'
 
+        # Define o usuário alvo como 'editar' por padrão (edita o usuário atual)
+        context['grupo_primario'] = context['grupo']
+
         # Busca mais informações do usuário atual
         user = get_object_or_404(User, username=self.request.user)
 
@@ -231,6 +234,7 @@ class usuarios(LoginRequiredMixin, TemplateView):
         context['nome_completo'] = f"{user.first_name} {user.last_name}"
         context['email'] = user.email
         context['grupo'] = user.groups.first().name  # Grupo do usuário atual que indica ações de preenchimento da página
+        context['grupo_primario'] = context['grupo']
 
         return context
     #def get_context_data(self, **kwargs):
