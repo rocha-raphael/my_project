@@ -17,7 +17,8 @@ import base64
 import threading
 import numpy as np
 from django.core.mail import EmailMessage
-from django.views.decorators import gzip
+from django.views.decorators import gzip, method_decorator
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 class index(TemplateView):
@@ -424,7 +425,10 @@ class usuarios(LoginRequiredMixin, TemplateView):
             return None
 
 class CapturaView(View):
-    @gzip.gzip_page
+    @method_decorator(csrf_exempt)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
     def get(self, request, *args, **kwargs):
         try:
             cam = self.VideoCamera()
@@ -432,7 +436,6 @@ class CapturaView(View):
         except Exception as e:
             print(f"Erro na captura de vídeo: {e}")
             return self.handle_error(request)
-
     # To capture video class
     class VideoCamera(object):
         def __init__(self):
