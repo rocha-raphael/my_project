@@ -224,9 +224,6 @@ class usuarios(LoginRequiredMixin, TemplateView):
         # Define o usuário alvo como 'editar' por padrão (edita o usuário atual)
         context['usuario_alvo'] = 'editar'
 
-        # Define o usuário alvo como 'editar' por padrão (edita o usuário atual)
-        context['grupo_primario'] = context['grupo']
-
         # Busca mais informações do usuário atual
         user = get_object_or_404(User, username=self.request.user)
 
@@ -234,24 +231,10 @@ class usuarios(LoginRequiredMixin, TemplateView):
         context['nome_completo'] = f"{user.first_name} {user.last_name}"
         context['email'] = user.email
         context['grupo'] = user.groups.first().name  # Grupo do usuário atual que indica ações de preenchimento da página
-        print(context['grupo'])
+        context['grupo_primario'] = context['grupo']
 
         return context
-    #def get_context_data(self, **kwargs):
-    #    context = super().get_context_data(**kwargs)
-    #    context["container"] = 'usuarios' # mantem o container no usuários após o post
-    #    context["todos_grupos"] = ['usuario','supervisor','admin'] # Grupos que podem ser escolhidos
-    #    context["nomes"]= [nome.username for nome  in User.objects.all() if nome.username not in ['admin', str(self.request.user)]] #side bar daa direita com nomes de usuários
-    #    context['nome_usuario'] = self.request.user # busca o nome do usuário atual
-    #    context['usuario_alvo'] = 'editar' # por padra tem editar que edita o usuário atual
-    #    user = get_object_or_404(User, username=self.request.user) #busca mais informações do usuário atual
-#
-    #    # Obter dados mais completos do usuárioa tual
-    #    context['nome_completo'] = f"{user.first_name} {user.last_name}"
-    #    context['email'] = user.email
-    #    context['grupo'] = user.groups.first().name #grupo do usuário atual que indica ações de preenchimento da pagina
-        
-        return context
+
 
     def get(self, request, *args, **kwargs):
         current_dict = self.get_context_data()
