@@ -1,9 +1,9 @@
 {% load static %}
 
 <link rel="stylesheet" href="{% static 'css/estilo_ponto.css' %}">
-
+    <h1>Ponto</h1>
 <div class="ponto">
-    <h1>Bater Ponto</h1>
+
     <form action="{% url 'ponto' %}" method="post">{% csrf_token %}
 
 
