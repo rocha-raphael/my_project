@@ -443,7 +443,7 @@ class ponto(LoginRequiredMixin, TemplateView):
         self.current_dict['nome_completo'] = nome_completo
        
         #nome_usuario
-        
+
         # Obter dados mais completos do usuário atual
         nome_completo = f"{user.first_name} {user.last_name}"
         print(request.POST.dict())
@@ -453,7 +453,7 @@ class ponto(LoginRequiredMixin, TemplateView):
             print(e)
 
         try:
-            data = json.loads(request.body.decode('utf-8'))
+            data = json.loads(request.body)
             print(data)
 
             nome_usuario = data.get('nome_usuario')
