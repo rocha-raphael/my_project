@@ -13,7 +13,7 @@
     border: none;  /* Remova a borda */
     outline: none;  /* Remova o contorno ao focar */
     background-color: transparent;  /* Remova a cor de fundo padrão */
-    font-size: 16px;
+    font-size: 32px;
     font-family: 'Roboto', sans-serif;  /* Substitua 'SuaFonte' pela fonte desejada */
     color: #333;  /* Cor do texto */
 }
