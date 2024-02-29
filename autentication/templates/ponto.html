@@ -2,13 +2,8 @@
 
 <link rel="stylesheet" href="{% static 'css/estilo_ponto.css' %}">
     <h1>Ponto</h1>
-        <div id="clock"></div>
-    <div id="mensagem"></div>
-        <script type="text/javascript">
-        var nome_usuario = "{{ nome_completo }}"; // Atribui o valor da variável de template tetste
 
 
-    </script>
 <div class="ponto">    
 
 <br>
@@ -22,8 +17,14 @@
 
 </form>
 
+    <div id="clock"></div>
+    <div id="mensagem"></div>
+
+    <script type="text/javascript">
+        var nome_usuario = "{{ nome_completo }}"; // Atribui o valor da variável de template tetste
 
 
+    </script>
     <script src="{% static 'javascript/ponto.js' %}"></script> 
 
 
