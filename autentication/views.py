@@ -434,15 +434,15 @@ class ponto(LoginRequiredMixin, TemplateView):
     def get(self, request, *args, **kwargs):
         print(request.GET.dict())
         user = get_object_or_404(User, username=request.user)
-        nome_completo = f"{user.first_name} {user.last_name}"
-        self.current_dict['nome_completo'] = nome_completo
+        self.current_dict['nome_completo'] = f"{user.first_name} {user.last_name}"
+        self.current_dict['grupo'] = user.groups.first().name  # Grupo do usuário atual que indica ações de preenchimento da página
 
         return render(request, self.current_page, self.current_dict)
     def post(self, request, *args, **kwargs):
         user = get_object_or_404(User, username=request.user)
-        nome_completo = f"{user.first_name} {user.last_name}"
-        self.current_dict['nome_completo'] = nome_completo
-       
+        self.current_dict['nome_completo'] = f"{user.first_name} {user.last_name}"
+        self.current_dict['grupo'] = user.groups.first().name  # Grupo do usuário atual que indica ações de preenchimento da página
+
         #nome_usuario
 
         # Obter dados mais completos do usuário atual
