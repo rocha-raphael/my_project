@@ -464,5 +464,6 @@ class ponto(LoginRequiredMixin, TemplateView):
         except json.JSONDecodeError as e:
             print(f"Erro: {e}")
         # Faça algo com os dados recebidos
+        print(self.current_dict)
         
         return render(request, self.current_page, self.current_dict)
