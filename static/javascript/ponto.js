@@ -22,5 +22,7 @@ function atualizarRelogio() {
     if (relógioAtivo) {
         var horarioAtualizado = new Date().toLocaleTimeString();
         document.getElementById('clock').innerText = `Olá, ${nome_usuario}! Horário atual: ${horarioAtualizado}`;
+    } else {
+        document.getElementById('clock').innerText = ``;
     }
 }
