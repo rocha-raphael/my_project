@@ -441,7 +441,7 @@ class ponto(LoginRequiredMixin, TemplateView):
             nome_usuario = data.get('nome_usuario')
             valor_relogio = data.get('valor_relogio')
             print(nome_usuario, valor_relogio)
-        except Exception as e:
+        except json.JSONDecodeError as e:
             print(f"Erro: {e}")
         # Faça algo com os dados recebidos
         
