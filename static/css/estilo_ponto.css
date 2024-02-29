@@ -1,4 +1,4 @@
-.ponto div{
+.ponto {
     font-family: Arial, sans-serif;
     background-color: #f3f4f6;
     display: flex;
@@ -10,9 +10,12 @@
 #nome_usuario {
     margin-top: 10px;
     padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    border: none;  /* Remova a borda */
+    outline: none;  /* Remova o contorno ao focar */
+    background-color: transparent;  /* Remova a cor de fundo padrão */
     font-size: 16px;
+    font-family: 'Verdana', sans-serif;  /* Substitua 'SuaFonte' pela fonte desejada */
+    color: #333;  /* Cor do texto */
 }
 
 .ponto button {
