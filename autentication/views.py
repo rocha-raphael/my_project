@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse, StreamingHttpResponse
+from django.http import HttpResponse, StreamingHttpResponse, JsonResponse
 #importar google autenticador
 from django.contrib.auth.models import User, Group
 from my_project.settings import YOUR_GOOGLE_CLIENT_ID
@@ -433,5 +433,12 @@ class ponto(LoginRequiredMixin, TemplateView):
         return render(request, self.current_page, self.current_dict)
     def post(self, request, *args, **kwargs):
         print(request.POST.dict())
-
+        try:
+            data = json.loads(request.body.decode('utf-8'))
+            nome_usuario = data.get('nome_usuario')
+            valor_relogio = data.get('valor_relogio')
+        except Exception as e:
+            print(e)
+        # Faça algo com os dados recebidos
+        print(nome_usuario, valor_relogio)
         return render(request, self.current_page, self.current_dict)
