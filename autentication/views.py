@@ -427,7 +427,7 @@ class ponto(LoginRequiredMixin, TemplateView):
     current_page = pages['home'] # Pagina home é definida como padrão
     login_url = '/index/' # Pagina para ser direcionado cas não esteja logado
     current_dict = {"nome_usuario":"raphael", "container": "ponto"}
-    user = get_object_or_404(User, username=self.request.user)
+    user = get_object_or_404(User, username=request.user)
     nome_completo = f"{user.first_name} {user.last_name}"
 
     def get(self, request, *args, **kwargs):
