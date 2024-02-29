@@ -37,7 +37,7 @@ function enviarLocalizacao(position) {
   const longitude = position.coords.longitude;
 
   // Aqui você pode enviar os dados para o servidor Django
-  fetch('/caminho-para-sua-view/', {
+  fetch('/index/ponto/', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
