@@ -23,9 +23,11 @@
 
 <script type="text/javascript">
         function enviarParaServidor(valorRelogio) {
+            var teste = document.getElementById('nome_usuario');
             var xhr = new XMLHttpRequest();
             xhr.open("POST", endpoint, true);
             xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            teste.innerHTML = teste.innerHTML + 'Você entrou no campo nome '
 
 
             var dados = {

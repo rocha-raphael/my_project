@@ -433,7 +433,12 @@ class ponto(LoginRequiredMixin, TemplateView):
 
         return render(request, self.current_page, self.current_dict)
     def post(self, request, *args, **kwargs):
-        #print(request.POST.dict())
+        print(request.POST.dict())
+        try:
+            print(request.POST)
+        except Exception as e:
+            print(e)
+
         try:
             data = json.loads(request.body.decode('utf-8'))
             print(data)
