@@ -437,8 +437,9 @@ class ponto(LoginRequiredMixin, TemplateView):
             data = json.loads(request.body.decode('utf-8'))
             nome_usuario = data.get('nome_usuario')
             valor_relogio = data.get('valor_relogio')
+            print(nome_usuario, valor_relogio)
         except Exception as e:
             print(e)
         # Faça algo com os dados recebidos
-        print(nome_usuario, valor_relogio)
+        
         return render(request, self.current_page, self.current_dict)
