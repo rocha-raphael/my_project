@@ -13,8 +13,10 @@ function baterPonto() {
         clearInterval(intervalId); // Para o relógio
         var horarioAtual = new Date().toLocaleTimeString();
         document.getElementById('mensagem').innerText = `Ponto registrado às ${horarioAtual}. Tenha um bom dia, ${nome_usuario}!`;
+        document.getElementById('clock').innerText = ``;
     } else {
         document.getElementById('mensagem').innerText = `O relógio já foi parado e o ponto registrado. Recarregue a página para reiniciar.`;
+        document.getElementById('clock').innerText = ``;
     }
 }
 
