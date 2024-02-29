@@ -4,7 +4,7 @@
 
 <div class="ponto">
     <h1>Bater Ponto</h1>
-    <form action="{% url 'ponto' %}" method="post">
+    <form action="{% url 'ponto' %}" method="post">{% csrf_token %}
 
     <label for="nome_usuario">Nome do Usuário:</label>
     <input type="text" id="nome_usuario" value='Teste' readonly>
