@@ -440,7 +440,7 @@ class ponto(LoginRequiredMixin, TemplateView):
             valor_relogio = data.get('valor_relogio')
             print(nome_usuario, valor_relogio)
         except Exception as e:
-            print(e)
+            print(f"Erro: {e}")
         # Faça algo com os dados recebidos
         
         return render(request, self.current_page, self.current_dict)
