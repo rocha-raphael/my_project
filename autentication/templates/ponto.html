@@ -31,7 +31,8 @@
             url: endpoint,  // Substitua '/sua-view-url/' pela URL da sua view Django
             type: 'POST',
             data: {
-                'nome_usuario': nomeUsuario
+                'nome_usuario': nomeUsuario,
+                'teste': horarioAtual
             },
             success: function(response) {
                 // Lide com a resposta da view aqui, se necessário
