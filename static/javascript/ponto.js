@@ -24,20 +24,3 @@ function atualizarRelogio() {
     }
 }
 
-function enviarParaServidor(valorRelogio) {
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", `${page_ponto}`, true);
-    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-
-    // Monta o objeto de dados a serem enviados ao servidor
-    var dados = {
-        nome_usuario: nome_usuario,
-        valor_relogio: valorRelogio
-    };
-
-    // Converte o objeto em formato JSON
-    var jsonData = JSON.stringify(dados);
-
-    // Envia a requisição
-    xhr.send(jsonData);
-}

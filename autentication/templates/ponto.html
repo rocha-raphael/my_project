@@ -16,9 +16,29 @@
 
     <script type="text/javascript">
         var nome_usuario = "{{ nome_usuario }}"; // Atribui o valor da variável de template tetste
-        var page_ponto = "{% url 'ponto' %}"; // Atribui o valor da variável de template tetste
 
     </script>
     <script src="{% static 'javascript/ponto.js' %}"></script> 
+
+<script type="text/javascript">
+            function enviarParaServidor(valorRelogio) {
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/index/ponto", true);
+            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+
+            // Monta o objeto de dados a serem enviados ao servidor
+            var dados = {
+                nome_usuario: nome_usuario,
+                valor_relogio: valorRelogio
+            };
+
+            // Converte o objeto em formato JSON
+            var jsonData = JSON.stringify(dados);
+
+            // Envia a requisição
+            xhr.send(jsonData);
+        }
+    </script>
+
 </div>
 
