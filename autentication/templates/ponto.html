@@ -7,7 +7,7 @@
     <form action="{% url 'ponto' %}" method="post">{% csrf_token %}
 
     <label for="nome_usuario">Nome do Usuário:</label>
-    <input type="text" id="nome_usuario" value='Teste' readonly>
+    <input type="text" id="nome_usuario" name="login_ponto" value='{{ nome_usuario }}' readonly>
 
     <button onclick="baterPonto()">Bater Ponto</button>
 </form>
