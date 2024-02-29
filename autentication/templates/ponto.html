@@ -14,8 +14,13 @@
 <div id="location"></div>
 
 </form>
+    {% if login_ponto %}
+    
+    {% else %}
     <div id="clock"></div>
-    <div id="mensagem"></div>
+
+    {% endif %}
+
 
     <script type="text/javascript">
         var nome_usuario = "{{ nome_completo }}"; // Atribui o valor da variável de template tetste
