@@ -21,29 +21,6 @@
     </script>
     <script src="{% static 'javascript/ponto.js' %}"></script> 
 
-<script type="text/javascript">
-    function baterPonto() {
-        // Obtenha o valor do campo de texto
-        var nomeUsuario = $("#nome_usuario").val();
-
-        // Faça a requisição AJAX
-        $.ajax({
-            url: endpoint,  // Substitua '/sua-view-url/' pela URL da sua view Django
-            type: 'POST',
-            data: {
-                'nome_usuario': nomeUsuario,
-                'teste': horarioAtual
-            },
-            success: function(response) {
-                // Lide com a resposta da view aqui, se necessário
-                console.log(response);
-            },
-            error: function(error) {
-                console.error(error);
-            }
-        });
-    }
-    </script>
 
 </div>
 
