@@ -436,6 +436,7 @@ class ponto(LoginRequiredMixin, TemplateView):
         user = get_object_or_404(User, username=request.user)
         self.current_dict['nome_completo'] = f"{user.first_name} {user.last_name}"
         self.current_dict['grupo'] = user.groups.first().name
+        self.current_dict['login_ponto'] = None
         print(self.current_dict)
 
         return render(request, self.current_page, self.current_dict)
