@@ -433,11 +433,11 @@ class ponto(LoginRequiredMixin, TemplateView):
 
         return render(request, self.current_page, self.current_dict)
     def post(self, request, *args, **kwargs):
-        print(request.POST.dict())
+        #print(request.POST.dict())
         try:
             data = json.loads(request.body.decode('utf-8'))
             print(data)
-            
+
             nome_usuario = data.get('nome_usuario')
             valor_relogio = data.get('valor_relogio')
             print(nome_usuario, valor_relogio)
