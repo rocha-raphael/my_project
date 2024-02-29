@@ -2,9 +2,10 @@
 
 <link rel="stylesheet" href="{% static 'css/estilo_ponto.css' %}">
     <h1>Ponto</h1>
-<div class="ponto">    
-    <div id="clock"></div>
+        <div id="clock"></div>
     <div id="mensagem"></div>
+<div class="ponto">    
+
 <br>
     <form action="{% url 'ponto' %}" method="post">{% csrf_token %}
 
