@@ -426,7 +426,7 @@ class ponto(LoginRequiredMixin, TemplateView):
     pages = {"home":"home.html", "login":"login.html", "r_senha":"rec_senha.html"}
     current_page = pages['home'] # Pagina home é definida como padrão
     login_url = '/index/' # Pagina para ser direcionado cas não esteja logado
-    current_dict = {"nome_usuario":"raphael", "container": "ponto"}
+    current_dict = {"nome_completo":"raphael", "container": "ponto"}
     
     
 
@@ -434,15 +434,16 @@ class ponto(LoginRequiredMixin, TemplateView):
         print(request.GET.dict())
         user = get_object_or_404(User, username=request.user)
         nome_completo = f"{user.first_name} {user.last_name}"
-        self.current_dict['nome_usuario'] = nome_completo
+        self.current_dict['nome_completo'] = nome_completo
 
         return render(request, self.current_page, self.current_dict)
     def post(self, request, *args, **kwargs):
         user = get_object_or_404(User, username=request.user)
         nome_completo = f"{user.first_name} {user.last_name}"
-        self.current_dict['nome_usuario'] = nome_completo
+        self.current_dict['nome_completo'] = nome_completo
        
-
+        #nome_usuario
+        
         # Obter dados mais completos do usuário atual
         nome_completo = f"{user.first_name} {user.last_name}"
         print(request.POST.dict())
