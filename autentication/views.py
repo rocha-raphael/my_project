@@ -427,16 +427,20 @@ class ponto(LoginRequiredMixin, TemplateView):
     current_page = pages['home'] # Pagina home é definida como padrão
     login_url = '/index/' # Pagina para ser direcionado cas não esteja logado
     current_dict = {"nome_usuario":"raphael", "container": "ponto"}
-    user = get_object_or_404(User, username=request.user)
-    nome_completo = f"{user.first_name} {user.last_name}"
+    
+    
 
     def get(self, request, *args, **kwargs):
         print(request.GET.dict())
-        current_dict = self.nome_completo
+        user = get_object_or_404(User, username=request.user)
+        nome_completo = f"{user.first_name} {user.last_name}"
+        self.current_dict['nome_usuario'] = nome_completo
 
         return render(request, self.current_page, self.current_dict)
     def post(self, request, *args, **kwargs):
-        current_dict = self.nome_completo
+        user = get_object_or_404(User, username=request.user)
+        nome_completo = f"{user.first_name} {user.last_name}"
+        self.current_dict['nome_usuario'] = nome_completo
        
 
         # Obter dados mais completos do usuário atual
