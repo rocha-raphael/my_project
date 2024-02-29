@@ -11,7 +11,7 @@ function baterPonto() {
         clearInterval(intervalId); // Para o relógio
         var horarioAtual = new Date().toLocaleTimeString();
         document.getElementById('clock').style.display = 'none'; // Oculta o relógio
-        document.getElementById('mensagem').innerText = `Ponto registrado às ${horarioAtual}. Tenha um bom dia, ${nome_usuario}!`;
+        document.getElementById('mensagem').innerText = `Ponto registrado às ${horarioAtual}. Tenha um bom dia ${nome_usuario}!`;
     } else {
         document.getElementById('mensagem').innerText = `O relógio já foi parado e o ponto registrado. Recarregue a página para reiniciar.`;
     }
