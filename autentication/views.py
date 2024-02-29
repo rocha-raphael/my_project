@@ -12,6 +12,7 @@ from django.contrib.auth import login as djandoLogin
 import re
 from django.contrib.auth.mixins import LoginRequiredMixin
 import json
+from django.views.decorators.csrf import csrf_exempt
 
 
 # Create your views here.
