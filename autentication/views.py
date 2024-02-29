@@ -428,8 +428,10 @@ class ponto(LoginRequiredMixin, TemplateView):
     current_dict = {"nome_usuario":"raphael", "container": "ponto"}
 
     def get(self, request, *args, **kwargs):
+        print(request.GET.dict())
 
         return render(request, self.current_page, self.current_dict)
     def post(self, request, *args, **kwargs):
+        print(request.POST.dict())
 
         return render(request, self.current_page, self.current_dict)

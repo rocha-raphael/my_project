@@ -4,12 +4,13 @@
 
 <div class="ponto">
     <h1>Bater Ponto</h1>
+    <form action="{% url 'ponto' %}" method="post">
 
     <label for="nome_usuario">Nome do Usuário:</label>
     <input type="text" id="nome_usuario" value='Teste' readonly>
 
     <button onclick="baterPonto()">Bater Ponto</button>
-
+</form>
     <div id="clock"></div>
     <div id="mensagem"></div>
 
