@@ -26,7 +26,7 @@ function atualizarRelogio() {
 
 function enviarParaServidor(valorRelogio) {
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "/index/ponto", true);
+    xhr.open("POST", `${page_ponto}`, true);
     xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 
     // Monta o objeto de dados a serem enviados ao servidor
