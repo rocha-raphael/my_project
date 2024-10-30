@@ -26,4 +26,5 @@ urlpatterns = [
     path('index/', include('autentication.urls')),
     path('', include('autentication.urls')),
     path('ponto/', include('ponto.urls')),
+
 ]

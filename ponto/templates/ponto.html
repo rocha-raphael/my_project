@@ -1,0 +1,66 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/estilo_ponto.css' %}">
+    <h1>Ponto</h1>
+<div class="ponto">
+
+    <form action="{% url 'ponto' %}" method="post">{% csrf_token %}
+
+
+    <input type="text" id="nome_usuario" name="login_ponto" value='{{ nome_completo }}' readonly>
+<br>
+    <button onclick="baterPonto()">Bater Ponto</button>
+
+<div id="location"></div>
+ <input type="text" id=horarioAtualizado name="horarioAtualizado" value={{ horarioAtualizado }}  readonly>
+</form>
+    {% if login_ponto %}
+    teste111
+
+    {% else %}
+    teste21111
+    <div id="clock"></div>teste
+
+
+
+    {% endif %}
+
+
+    <script type="text/javascript">
+        var nome_usuario = "{{ nome_completo }}"; // Atribui o valor da variável de template tetste
+        var relógioAtivo = true;
+        var intervalId;
+        var horarioAtual = new Date().toLocaleTimeString();
+
+        window.onload = function() {
+            document.getElementById('nome_usuario').value = nome_usuario;
+            intervalId = setInterval(atualizarRelogio, 1000);
+        }
+
+        function baterPonto() {
+            if (relógioAtivo) {
+                relógioAtivo = false;
+                clearInterval(intervalId); // Para o relógio
+                var horarioAtual = new Date().toLocaleTimeString();
+                document.getElementById('clock').style.display = 'none'; // Oculta o relógio
+            }
+        }
+
+        function atualizarRelogio() {
+            if (relógioAtivo) {
+                var horarioAtualizado = new Date().toLocaleTimeString();
+                document.getElementById('clock').innerText = `Olá, ${nome_usuario}! Horário atual: ${horarioAtualizado}`;
+
+
+            }
+        }
+
+
+    </script>
+    <script src="{% static 'javascript/ponto.js' %}"></script>
+
+
+
+
+</div>
+

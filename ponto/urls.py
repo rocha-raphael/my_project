@@ -3,5 +3,5 @@ from django.urls import path, include
 from .views import *
 
 urlpatterns = [
-    path('ponto/', ponto.as_view(), name="ponto"),
+    path('', ponto.as_view(), name="ponto"),
 ]

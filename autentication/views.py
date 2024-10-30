@@ -14,6 +14,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 import json
 from django.views.decorators.csrf import csrf_exempt
 
+def teste(request):
+    return render(request, "teste.html")
 
 # Create your views here.
 class index(TemplateView):
@@ -57,6 +59,9 @@ class index(TemplateView):
             current_page = self.pages["login"]
             
         return render(request, current_page, user_dict)
+
+
+
 
     def post(self, request, *args, **kwargs):
 

@@ -7,6 +7,7 @@ from .views import *
 urlpatterns = [
     path('', index.as_view(), name='index'),
     path('usuarios/', usuarios.as_view(), name='usuarios'),
+    path('teste/', teste, name='teste'),
     path('ponto/', include('ponto.urls')),
-    #path('ponto/', ponto.as_view(), name='ponto')
+
 ]

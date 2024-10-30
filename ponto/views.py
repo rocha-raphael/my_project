@@ -9,9 +9,8 @@ import json
 
 class ponto(LoginRequiredMixin, TemplateView):
     '''
-    Essa é a classe é para incluir, editar ou excluir usuários
+
     '''
-    #Nome do template na pasta /templates/
     pages = {"home":"home.html", "login":"login.html", "r_senha":"rec_senha.html"}
     current_page = pages['home'] # Pagina home é definida como padrão
     login_url = '/index/' # Pagina para ser direcionado cas não esteja logado
@@ -29,20 +28,22 @@ class ponto(LoginRequiredMixin, TemplateView):
 
         return render(request, self.current_page, self.current_dict)
     def post(self, request, *args, **kwargs):
+        print(args, kwargs)
         user = get_object_or_404(User, username=request.user)
         self.current_dict['nome_completo'] = f"{user.first_name} {user.last_name}"
         self.current_dict['grupo'] = user.groups.first().name
         self.current_dict['login_ponto'] = request.POST.get('login_ponto')
 
-
-
         # Obter dados mais completos do usuário atual
         nome_completo = f"{user.first_name} {user.last_name}"
         print(request.POST.dict())
-        try:
-            print(request.POST)
-        except Exception as e:
-            print(e)
+        print(request.POST.get('horarioAtualizado'))
+        if self.current_dict['login_ponto']:
+            try:
+                pass
+                print(request.POST)
+            except Exception as e:
+                print(e)
 
         try:
             data = json.loads(request.body)

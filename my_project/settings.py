@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'aplication',
     'autentication',
+    'ponto',
 ]
 
 MIDDLEWARE = [
@@ -89,7 +90,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    },
 #    'default': {
 #        'ENGINE': 'django.db.backends.mysql',
 #        'NAME': 'workspace',  # Nome do banco de dados
@@ -98,9 +99,17 @@ DATABASES = {
 #        'HOST': 'localhost',   # Ou o endereço IP do seu servidor MySQL
 #        'PORT': '3306',        # O porto padrão para o MySQL é 3306
 #    }
+    'ponto_db': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'ponto',
+        'USER': 'workspace',
+        'PASSWORD': 'workspace',
+        'HOST': 'localhost',
+        'PORT': '3306',
+    },
 }
 
-
+DATABASE_ROUTERS = ['ponto.router.AppRouter']
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
